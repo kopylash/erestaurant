@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Create Dish</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:toms handwritten new; ">
+	<f:event listener="#{adminPanelBean.onPreRenderView}"
+		type="preRenderView"></f:event>
+	<h:form>
+		<h:outputText
+			style="font-family: toms handwritten new; font-size: 600%; margin-left: 4%;"
+			value="Create" />
+		<p:commandButton style="margin-left: 1200px" value="Home"
+			icon="ui-icon-home" action="Hello"></p:commandButton>
+		<p:commandButton style="margin-left: 20px" value="Logout"
+			icon="ui-icon-power" action="#{loginBean.logout()}"></p:commandButton>
+
+		<p:growl id="messages"></p:growl>
+
+		<h:panelGrid columns="2" columnClasses="edit-column1,edit-column2">
+			<h:column>
+				<p:commandButton style="margin-left:80px;"
+					onclick="PF('switcher').previous();"
+					actionListener="#{adminPanelBean.changeImagePrevious()}"
+					icon="ui-icon-circle-triangle-w" id="prev" />
+				<p:commandButton onclick="PF('switcher').next();"
+					icon="ui-icon-circle-triangle-e"
+					actionListener="#{adminPanelBean.changeImageNext()}" id="next" />
+
+				<p:imageSwitch
+					style="margin-left:80px; border:solid; border-radius: 5px; border-color: green;"
+					effect="fade" widgetVar="switcher" id="manuelSwitcher"
+					slideshowAuto="false">
+					<ui:repeat value="#{adminPanelBean.imgList}" var="img"
+						id="manuelSwitcherImages">
+						<p:graphicImage id="dishImage" width="400" height="300"
+							library="dishImages" name="#{img.name}" />
+					</ui:repeat>
+				</p:imageSwitch>
+				<h:outputText value="Description"
+					style="margin-left:80px; margin-top:10px; font-size: 150%" />
+					<h:inputTextarea onchange="submit()"
+						valueChangeListener="#{adminPanelBean.mdDescriptionChanged}"
+						style="margin-left:80px; margin-top:5px; width:450px; font-size: 150%"
+						value="#{adminPanelBean.menuDish.description}">
+					</h:inputTextarea>
+			</h:column>
+			<h:column>
+					<h:outputText value="Name"
+						style="margin-left:400px; margin-top: 10px; font-size: 250%;" />
+					<p:inputText onchange="submit()" required="true"
+						valueChangeListener="#{adminPanelBean.mdNameChanged}"
+						value="#{adminPanelBean.menuDish.name}"
+						style="margin-left:20px; margin-top: 10px;  "></p:inputText>
+					<div>
+						<h:outputText value="Price"
+							style="margin-left:400px; margin-top: 40px; font-size: 250%; " />
+						<p:inputText onchange="submit()" required="true"
+							valueChangeListener="#{adminPanelBean.mdPriceChanged}"
+							value="#{adminPanelBean.menuDish.price}"
+							style="margin-left:20px; margin-top: 40px; ">
+							<f:convertNumber maxFractionDigits="2" />
+						</p:inputText>
+					</div>
+					<div>
+						<h:outputText value="Dish type"
+							style="margin-left:400px; margin-top: 20px; font-size: 250%; " />
+						<p:selectOneRadio onchange="submit()" required="true"
+							valueChangeListener="#{adminPanelBean.mdDishTypeChanged}"
+							style="margin-left:400px; margin-top: 5px; border: solid; border-radius:5px; border-color:green;"
+							value="#{adminPanelBean.menuDish.dishType}">
+							<f:selectItem itemLabel="Kitchen-made" itemValue="true" />
+							<f:selectItem itemLabel="Non-Kitchen-made" itemValue="false" />
+						</p:selectOneRadio>
+					</div>
+					<div>
+						<h:outputText value="Category"
+							style="margin-left:400px; margin-top: 30px; font-size: 250%; " />
+					</div>
+					<div>
+						<p:selectOneMenu onchange="submit()" required="true"
+							valueChangeListener="#{adminPanelBean.mdCategoryChanged}"
+							style="margin-left:400px; font-size: 150%;"
+							value="#{adminPanelBean.dishCategoryId}">
+							<f:selectItems value="#{adminPanelBean.categoryList}" var="cat"
+								itemLabel="#{cat.name}" itemValue="#{cat.id}" />
+						</p:selectOneMenu>
+					</div>
+			</h:column>
+		</h:panelGrid>
+
+	</h:form>
+
+	<h:form>
+		<p:commandButton value="Cancel"
+			style="margin-left: 110px; margin-top:50px; width: 200px; height: 70px; font-size: 190%;"
+			icon="ui-icon-cancel" action="admin">
+			<p:confirm header="Confirmation" message="Are you sure?"
+				icon="ui-icon-alert" />
+		</p:commandButton>
+
+		<p:commandButton value="Submit"
+			action="#{adminPanelBean.createMenuDish}"
+			style="margin-left: 1200px; margin-top:50px; width: 200px; height: 70px; font-size: 190%;"
+			icon="ui-icon-check">
+			<p:confirm header="Confirmation" message="Are you sure?"
+				icon="ui-icon-alert" />
+		</p:commandButton>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+			<p:commandButton value="Yes" action="admin"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+
+
+
+
+</h:body>
+</html>

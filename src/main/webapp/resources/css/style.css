@@ -1,0 +1,158 @@
+@font-face {
+	font-family: 'toms handwritten new';
+	src: url('http://www.fontsaddict.com/fontface/toms-handwritten-new.ttf');
+}
+
+.menu {
+	border: dashed;
+	margin: auto;
+	font-family: toms handwritten new;
+	font-size: xx-large;
+}
+
+.menu-bar {
+	margin-left: 1100px;
+	margin-top: 0;
+	margin-bottom: 0 mm;
+	background: #fa4;
+}
+
+.category-menu-panel {
+	padding:5px;
+	width: 1500px;
+}
+
+.category-menu-description {
+	margin-left: 10px;
+	width: 150px;
+}
+
+.category-menu-image {
+	width: 160px;
+	height: 120px;
+	border-radius: 5px;
+}
+
+.shoppingCart-panelGrid-column1 {
+	width: 40px;
+}
+
+.shoppingCart-panelGrid-column2 {
+	width: 160px;
+}
+
+.shoppingCart-panelGrid-column3 {
+	width: 450px;
+}
+
+.shoppingCart-panelGrid-column4 {
+	width: 150px;
+}
+
+.shoppingCart-panelGrid-column5 {
+	width: 300px;
+}
+
+.shoppingCart-panelGrid-column6 {
+	width: 300px;
+}
+
+.order-dialog {
+	font-size: 155%;
+}
+
+.admin-menu-c1 {
+	width: 40px;
+}
+
+.admin-menu-c2 {
+	width: 600px;
+}
+
+.admin-menu-c3 {
+	width: 400px;
+}
+
+.admin-menu-c4 {
+	width: 460px;
+}
+
+.edit-column1 {
+	width: 540px;
+}
+
+.edit-column2 {
+	width: 1480px;
+	padding-bottom: 100px;
+}
+
+.ui-growl {
+	right: 20px;
+}
+
+.add-md-col1 {
+	width: 800px;
+}
+
+.add-md-col2 {
+	width: 300px;
+}
+
+.add-md-col3 {
+	width: 400px;
+}
+
+.kitchen-panel-c1 {
+	width: 50px;
+}
+
+.kitchen-panel-c2 {
+	width: 400px;
+}
+
+.kitchen-panel-c3 {
+	width: 300px;
+}
+
+.kitchen-panel-c4 {
+	width: 50px;
+}
+
+.kitchen-list-undone {
+	width: 800px;
+	height: 700px;
+	border: solid;
+	border-color: #fa45;
+	border-radius: 8px;
+	border: solid;
+}
+
+.kitchen-list-done {
+	margin-left: 50px;
+	width: 500px;
+	height: 700px;
+	border: solid;
+	border-color: #007f00;
+	border-radius: 8px;
+}
+
+.staff-panel {
+	width: 800px;
+	margin-left: 200px;
+}
+
+.staff-list-c1 {
+	width: 40px;
+}
+
+.staff-list-c2 {
+	width: 360px;
+}
+
+.staff-list-c3 {
+	width: 200px;
+}
+
+.staff-list-c4 {
+	width: 200px;
+}

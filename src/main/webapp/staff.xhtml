@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Security Officer page</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:toms handwritten new; ">
+
+	<f:event listener="#{staffBean.onPreRenderView}" type="preRenderView"></f:event>
+
+	<h:form id="StaffForm">
+		<p:growl id="messages" />
+		<h:outputText
+			style="font-family: toms handwritten new; font-size: 600%; margin-left: 200px;"
+			value="Staff" />
+
+		<p:commandButton style="margin-left: 900px" value="Home"
+			icon="ui-icon-home" action="Hello?faces-redirect=true"></p:commandButton>
+		<p:commandButton style="margin-left: 20px" value="Logout"
+			icon="ui-icon-power" action="#{loginBean.logout()}"></p:commandButton>
+
+
+		<p:panel styleClass="staff-panel">
+			<p:dataGrid columns="1" value="#{staffBean.staffList}" var="staff">
+				<h:panelGrid columns="4"
+					columnClasses="staff-list-c1,staff-list-c2, staff-list-c3, staff-list-c4">
+					<h:commandLink action="#{staffBean.deleteStaff(staff.id)}">
+						<h:graphicImage library="images" name="deleteDish.png" />
+					</h:commandLink>
+					<h:outputText style="font-size:200%; margin-left: 20px;"
+						value="#{staff.name} #{staff.surname}" />
+					<h:outputText value=" #{staff.role}"></h:outputText>
+					<p:commandButton id="edit" style="margin-left: 50px;" value="Edit"
+						action="#{staffBean.setWorkerId(staff.id)}" update=":editDlg"
+						oncomplete="PF('editStaff').show()">
+
+					</p:commandButton>
+				</h:panelGrid>
+			</p:dataGrid>
+		</p:panel>
+
+		<p:commandButton
+			style="margin-left: 200px; margin-top:10px; width: 200px; height: 70px; font-size: 150%;"
+			value="Add Staff" actionListener="#{staffBean.onCreateStaff}" onclick="PF('createStaff').show()" />
+
+
+		<!--  <p:commandButton value="Submit"
+			style="margin-left: 20px; margin-top:10px; width: 150px; height: 70px; font-size: 150%;"
+			icon="ui-icon-check">
+			<p:confirm header="Confirmation" message="Are you sure?"
+				icon="ui-icon-alert" />
+		</p:commandButton>-->
+
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="editDlg">
+		<p:dialog height="400" width="600" position="right"
+			style="margin-right: 100px;" header="Edit staff" resizable="false"
+			widgetVar="editStaff">
+			<h:panelGrid columns="2" style="margin-top:50px; margin-left:100px;">
+				<h:outputText value="Name:" />
+				<h:inputText required="true" value="#{staffBean.worker.name}" />
+				<h:outputText value="Surname" />
+				<h:inputText required="true" value="#{staffBean.worker.surname}" />
+				<h:outputText value="Login:" />
+				<h:inputText required="true" value="#{staffBean.worker.login}" />
+				<h:outputText value="Password:" />
+				<h:inputText required="true" value="#{staffBean.worker.password}" />
+			</h:panelGrid>
+			<div style="margin-top: 70px;">
+				<h:outputText style="font-size: 150%; margin-left: 80px;"
+					value="Role" />
+				<div>
+					<p:selectOneMenu required="true"
+						style="font-size: 120%; margin-top:10px; margin-left:80px;"
+						value="#{staffBean.worker.role}">
+						<f:selectItem itemLabel="Administrator" itemValue="administrator" />
+						<f:selectItem itemLabel="Kitchen Staff" itemValue="kitchen staff" />
+					</p:selectOneMenu>
+					<p:commandButton onclick="submit()"
+						style="margin-left: 100px; margin-bottom: 30px; width:100px; height: 50px;"
+						value="Save" action="#{staffBean.editStaff}">
+					</p:commandButton>
+				</div>
+			</div>
+
+		</p:dialog>
+	</h:form>
+	<h:form id="createDlg">
+		<p:dialog height="400" width="600" position="right"
+			style="margin-right: 100px;" header="Create employee"
+			resizable="false" widgetVar="createStaff">
+
+			<h:panelGrid columns="2" style="margin-top:50px; margin-left:100px;">
+				<h:outputText value="Name:" />
+				<h:inputText required="true" value="#{staffBean.worker.name}" />
+				<h:outputText value="Surname" />
+				<h:inputText required="true" value="#{staffBean.worker.surname}" />
+				<h:outputText value="Login:" />
+				<h:inputText required="true" value="#{staffBean.worker.login}" />
+				<h:outputText value="Password" />
+				<h:inputSecret required="true" value="#{staffBean.worker.password}" />
+			</h:panelGrid>
+			<div style="margin-top: 70px;">
+				<h:outputText style="font-size: 150%; margin-left: 80px;"
+					value="Role" />
+				<div>
+					<p:selectOneMenu required="true"
+						style="font-size: 120%; margin-top:10px; margin-left:80px;"
+						value="#{staffBean.worker.role}">
+						<f:selectItem itemLabel="Administrator" itemValue="administrator" />
+						<f:selectItem itemLabel="Kitchen Staff" itemValue="kitchen staff" />
+					</p:selectOneMenu>
+					<p:commandButton onclick="submit()"
+						style="margin-left: 100px; margin-bottom: 30px; width:100px; height: 50px;"
+						value="Create" action="#{staffBean.createStaff}"></p:commandButton>
+				</div>
+			</div>
+
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

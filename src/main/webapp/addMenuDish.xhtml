@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Create Dish</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:toms handwritten new; ">
+
+	<f:event listener="#{adminPanelBean.onPreRenderView}"
+		type="preRenderView"></f:event>
+
+	<h:form>
+		<p:commandButton style="margin-left: 30px" value="Admin panel"
+			action="admin"></p:commandButton>
+		<h:outputText
+			style="font-family: toms handwritten new; font-size: 400%; margin-left: 4%;"
+			value="Deprecated dishes. You can add them to your menu" />
+		<p:commandButton style="margin-left: 150px" value="Home"
+			icon="ui-icon-home" action="Hello?faces-redirect=true"></p:commandButton>
+		<p:commandButton style="margin-left: 20px" value="Logout"
+			icon="ui-icon-power" action="#{loginBean.logout()}"></p:commandButton>
+
+		<p:growl id="addOldMenuDish" />
+
+		<p:panel style="width: 1500px; margin: auto; ">
+			<p:dataGrid value="#{adminPanelBean.getOldDishes()}" var="oldDish"
+				columns="1">
+				<h:panelGrid columns="3"
+					columnClasses="add-md-col1,add-md-col2,add-md-col3">
+					<h:column>
+						<h:outputText
+							style="font-family:toms handwritten new; font-size:400%; margin-left: 30px;"
+							value="#{oldDish.name}" />
+					</h:column>
+					<h:column>
+						<h:graphicImage style="margin-left: auto;" width="160"
+							height="120" library="dishImages" name="#{oldDish.image.name}" />
+					</h:column>
+					<h:column>
+						<h:form>
+							<p:commandButton onclick="submit()" style="margin-left: 100px;"
+								value="Add to menu"
+								action="#{adminPanelBean.addDish(oldDish.id)}"
+								actionListener="#{adminPanelBean.addDishMessage(oldDish.id)}" />
+						</h:form>
+					</h:column>
+				</h:panelGrid>
+			</p:dataGrid>
+		</p:panel>
+	</h:form>
+	<h:form>
+		<p:commandButton style="margin-left:200px; margin-top:30px;"
+			value="Create dish" action="#{adminPanelBean.goToCreatePage}" />
+	</h:form>
+</h:body>
+</html>

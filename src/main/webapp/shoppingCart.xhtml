@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Shopping Cart</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:toms handwritten new; margin: 0; padding: 0;">
+	<p:outputPanel style="margin: 15px auto 20px; width: 1500px;">
+		<p:commandButton style="margin: 5px;" value="Home"
+			icon="ui-icon-home" action="Hello?faces-redirect=true"></p:commandButton>
+		<p:commandButton value="Categories"
+			action="category?faces-redirect=true"></p:commandButton>
+		<div align="center"
+			style="border: 5px; border: solid; border-color: #9932CC; width: 1500px;">
+			<h:graphicImage width="1500" height="150" library="images"
+				name="cart.png" />
+		</div>
+
+		<h:outputText
+			style="font-family: toms handwritten new; font-size: 300%; margin-left: 110px; "
+			value="Your order list" />
+
+		<p:panel style="width: 1500px; margin-left: 10px auto 20px;">
+			<p:dataGrid value="#{shoppingCartBean.dishList}" var="dish"
+				columns="1">
+				<h:panelGrid columns="6"
+					columnClasses="shoppingCart-panelGrid-column1,shoppingCart-panelGrid-column2,shoppingCart-panelGrid-column3,shoppingCart-panelGrid-column4,shoppingCart-panelGrid-column5,shoppingCart-panelGrid-column6">
+					<h:column>
+						<h:form>
+							<h:commandLink
+								action="#{shoppingCartBean.removeDish(dish.mDish.id)}">
+								<h:graphicImage library="images" name="deleteDish.png" />
+							</h:commandLink>
+						</h:form>
+					</h:column>
+					<h:column>
+						<h:graphicImage style="margin-left: 35px;" width="120" height="90"
+							library="dishImages" name="#{dish.mDish.image.name}" />
+					</h:column>
+					<h:column>
+						<p:outputPanel style="padding: 10px; text-align: center;">
+							<h:outputText style="font-size: 200%; "
+								value="#{dish.mDish.name}" />
+						</p:outputPanel>
+					</h:column>
+					<h:column>
+						<h:outputText style="font-size: 180%; margin-left: 30px;"
+							value="#{dish.mDish.price}">
+							<f:convertNumber maxFractionDigits="2" />
+							<f:convertNumber currencySymbol="$" type="currency" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<h:form>
+							<p:spinner id="quantity" onchange="submit()"
+								style="margin-left: 40px;" min="1" max="30"
+								value="#{dish.quantity}">
+								<f:validateLongRange maximum="30" minimum="1" />
+							</p:spinner>
+						#{shoppingCartBean.calculateDishSum()}
+						<h:message for="quantity" style="color:red" />
+						</h:form>
+					</h:column>
+					<h:column>
+						<p:outputPanel style="text-align: right; padding: 0 76px 0 0;">
+							<h:outputText
+								style="font-size: 180%; margin-left: 100px; font-weight: 800;"
+								value="#{dish.totalPrice}">
+								<f:convertNumber maxFractionDigits="2" />
+								<f:convertNumber currencySymbol="$" type="currency" />
+							</h:outputText>
+						</p:outputPanel>
+					</h:column>
+				</h:panelGrid>
+			</p:dataGrid>
+			<h:form>
+				<h:outputText style="font-size: 150%;" value="Table number:" />
+				<p:spinner size="10" onchange="submit()"
+					value="#{shoppingCartBean.tableNumber}" max="30" min="1"></p:spinner>
+
+				<h:outputText style="font-size: 250%; margin-left: 700px; "
+					value="Total Sum: " />
+				<h:outputText style="font-size: 250%;  font-weight: 800;"
+					value="#{shoppingCartBean.orderSum}">
+					<f:convertNumber maxFractionDigits="2" />
+					<f:convertNumber currencySymbol="$" type="currency" />
+				</h:outputText>
+			</h:form>
+		</p:panel>
+		<p:outputPanel style="width:1500px; margin: 20px auto;">
+			<p:commandButton
+				style="width: 170px; height: 70px; font-size: 150%; float: left;"
+				icon="ui-icon-cancel" value="Cancel"
+				action="#{shoppingCartBean.cancelOrder}" />
+
+			<p:commandButton onclick="PF('OrderSubmit').show()"
+				style="width: 170px; height: 70px; font-size: 150%; float: right;"
+				icon="ui-icon-submit" value="Submit" />
+			<p:outputPanel style="clear: both;"/>
+		</p:outputPanel>
+	</p:outputPanel>
+
+	<p:dialog widgetVar="OrderSubmit" resizable="false"
+		header="Order Submit">
+		<h:outputText styleClass="order-dialog"
+			value="Thank you for your order :) " />
+		<div>
+			<h:outputText styleClass="order-dialog"
+				value="It will be served soon." />
+		</div>
+		<div>
+			<h:outputText styleClass="order-dialog"
+				value="Your table number is #{shoppingCartBean.tableNumber}" />
+		</div>
+		<div>
+			<h:outputText styleClass="order-dialog" value="Total order sum is  "></h:outputText>
+			<h:outputText styleClass="order-dialog"
+				value="#{shoppingCartBean.orderSum}">
+				<f:convertNumber maxFractionDigits="2" />
+				<f:convertNumber currencySymbol="$" type="currency" />
+			</h:outputText>
+		</div>
+		<p:commandButton
+			style="font-family: toms handwritten new; font-size:200%; margin-left:40%;"
+			value="Okay:)" action="#{shoppingCartBean.submitOrder}"></p:commandButton>
+	</p:dialog>
+
+
+</h:body>
+</html>

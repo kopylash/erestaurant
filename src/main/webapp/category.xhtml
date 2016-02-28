@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Category</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<p:outputPanel
+			style="width:1500px; margin: 10px auto 10px; font-family:toms handwritten new; ">
+			<h:outputText style="font-size:500%;  padding:10px;"
+				value="#{categoryMenuBean.dc.name}"></h:outputText>
+
+			<p:commandButton style="float:right"
+				value="Shopping cart (#{shoppingCartBean.dishList.size()})"
+				icon="ui-icon-cart" action="shoppingCart?faces-redirect=true"></p:commandButton>
+			<p:commandButton style=" background: #fa4; float:right; "
+				value="Home" icon="ui-icon-home" action="Hello?faces-redirect=true"></p:commandButton>
+
+			<p:growl id="addDishMsg" />
+
+			<p:panel styleClass="category-menu-panel">
+				<p:dataGrid value="#{categoryMenuBean.menuList}" var="item">
+					<p:outputPanel
+						style="width:480px; padding:5px auto 5px; align:center">
+						<p:column>
+							<h:commandLink action="#{shoppingCartBean.addDish(item.id)}"
+								actionListener="#{categoryMenuBean.addDishMessage(item.id)}">
+								<h:outputText
+									style="font-family: toms handwritten new; font-size: 200%"
+									value="#{item.name}" />
+							</h:commandLink>
+
+							<h:panelGrid columns="2">
+								<p:column>
+									<h:commandLink action="#{shoppingCartBean.addDish(item.id)}"
+										actionListener="#{categoryMenuBean.addDishMessage(item.id)}">
+										<h:graphicImage library="dishImages" name="#{item.image.name}"
+											styleClass="category-menu-image" />
+									</h:commandLink>
+									<div>
+										<h:outputText style="font-size: 130%" value="Price:  " />
+										<h:outputText style="font-size: 130%" value="#{item.price}">
+											<f:convertNumber maxFractionDigits="2" />
+											<f:convertNumber currencySymbol="$" type="currency" />
+										</h:outputText>
+									</div>
+								</p:column>
+								<p:outputPanel style="padding: 10px; text-align: center;">
+									<h:outputText styleClass="category-menu-description"
+										value="#{item.description}" />
+								</p:outputPanel>
+							</h:panelGrid>
+						</p:column>
+					</p:outputPanel>
+				</p:dataGrid>
+			</p:panel>
+		</p:outputPanel>
+	</h:form>
+</h:body>
+</html>

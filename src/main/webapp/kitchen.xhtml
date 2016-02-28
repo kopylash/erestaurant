@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Kitchen page</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:toms handwritten new; ">
+
+	<f:event listener="#{kitchenBean.onPreRenderView}"
+		type="preRenderView"></f:event>
+
+	<h:form>
+		<h:outputText
+			style="font-family: toms handwritten new; font-size: 600%; margin-left: 200px;"
+			value="Kitchen pending screen" />
+
+		<p:commandButton style="margin-left: 550px" value="Home"
+			icon="ui-icon-home" action="Hello?faces-redirect=true"></p:commandButton>
+		<p:commandButton style="margin-left: 20px" value="Logout"
+			icon="ui-icon-power" action="#{loginBean.logout()}"></p:commandButton>
+
+		<p:panelGrid style="margin-left: 200px; width:1400px;" columns="2">
+			<h:outputText style="margin-left: 290px; font-size: 140%;"
+				value="Unprepared dishes" />
+			<h:outputText style="margin-left: 200px; font-size: 140%;"
+				value="Made dishes" />
+			<p:scrollPanel styleClass="kitchen-list-undone">
+				<p:dataGrid value="#{kitchenBean.getPendingList()}" var="undoneDish"
+					columns="1">
+					<h:panelGrid columns="4"
+						columnClasses="kitchen-panel-c1, kitchen-panel-c2, kitchen-panel-c3, kitchen-panel-c4">
+						<h:graphicImage library="images" name="radiobutton.png" />
+						<h:outputText
+							style="font-family: toms handwritten new; font-size: 180%; margin-left: 20px;"
+							value="#{undoneDish.name}" />
+						<h:outputText value="#{undoneDish.time}" />
+						
+							<h:commandLink action="#{kitchenBean.markAsDone(undoneDish.id)}">
+								<h:graphicImage library="images" name="check.png" />
+							</h:commandLink>
+						
+					</h:panelGrid>
+				</p:dataGrid>
+			</p:scrollPanel>
+			<p:scrollPanel styleClass="kitchen-list-done">
+				<p:dataGrid value="#{kitchenBean.getPreparedDishes()}" var="madeDish"
+					columns="1">
+					
+			 <!-- 	<h:outputText style="font-size: 160%; margin-left: 200px;"
+						value="#{kitchenBean.checkOrderId(madeDish.id)}"></h:outputText> -->
+						
+					<h:panelGrid columns="2"
+						columnClasses="kitchen-panel-c1, kitchen-panel-c2">
+						<h:graphicImage style="margin-left:30px;" library="images"
+							name="radiobutton.png" />
+						<h:outputText
+							style="font-family: toms handwritten new; font-size: 180%; margin-left: 100px;"
+							value="#{madeDish.name}" />
+					</h:panelGrid>
+				</p:dataGrid>
+			</p:scrollPanel>
+		</p:panelGrid>
+
+
+
+	</h:form>
+</h:body>
+</html>

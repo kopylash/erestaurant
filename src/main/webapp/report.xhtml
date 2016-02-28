@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Report</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:Florence;">
+
+	<f:event listener="#{adminPanelBean.onPreRenderView}"
+		type="preRenderView"></f:event>
+
+	<h:form id="reportForm">
+		<h:outputText value="Reports"
+			style="font-size: 300%; margin-left: 160px;" />
+		<p:commandButton value="Admin panel"
+			action="admin?faces-redirect=true"
+			style="font-size: 130%; margin-left: 1270px;" />
+		<p:panel style="margin:auto; width:1600px;">
+			<h:panelGrid columns="4">
+				<h:column>
+					<h:outputText value="From: "
+						style="font-size:150%; margin-left:50px;" />
+					<p:calendar pattern="dd.MM.yyyy" showOn="button"
+						value="#{reportBean.startDate}" required="true"></p:calendar>
+				</h:column>
+				<h:column>
+					<h:outputText value="To: "
+						style="font-size:150%; margin-left:200px;" />
+					<p:calendar pattern="dd.MM.yyyy" showOn="button"
+						value="#{reportBean.finishDate}" required="true"></p:calendar>
+				</h:column>
+				<h:column>
+					<p:commandButton value="Total Report" style="margin-left:300px;"
+						action="#{reportBean.getTotalReport}" update="table"></p:commandButton>
+				</h:column>
+				<h:column>
+					<p:commandButton value="By Menu Items"
+						action="#{reportBean.getReportByMenu}" />
+				</h:column>
+			</h:panelGrid>
+
+			<p:dataTable id="table" value="#{reportBean.totalReportList}"
+				var="totalReport">
+				<p:column headerText="Date">
+					<h:outputText value="#{totalReport.date}" />
+				</p:column>
+				<p:column headerText="Order count">
+					<h:outputText value="#{totalReport.orderCount}" />
+				</p:column>
+				<p:column headerText="Sum"
+					footerText="Total: #{reportBean.calculateTotalSum()} ">
+					<h:outputText value="#{totalReport.totalSum}" />
+				</p:column>
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

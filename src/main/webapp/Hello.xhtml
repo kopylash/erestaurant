@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Main page</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body style="font-family:Florence;">
+
+	<h:outputText
+		style="font-family: toms handwritten new; font-size: 600%; margin-left: 4%;"
+		value="Restaurant" />
+	<p:commandButton styleClass="menu-bar" value="Home" icon="ui-icon-home"
+		action="Hello"></p:commandButton>
+	<p:commandButton
+		value="Shopping cart (#{shoppingCartBean.dishList.size()})"
+		icon="ui-icon-cart" action="shoppingCart?faces-redirect=true"></p:commandButton>
+
+	<p:panelGrid styleClass="menu" columns="4">
+		<h:outputText value="Main course" />
+		<h:outputText value="Soups" />
+		<h:outputText value="Salads" />
+		<h:outputText value="Rolls" />
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(1)}">
+				<h:graphicImage library="images" name="mainCourse.png" />
+			</h:commandLink>
+		</h:form>
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(2)}">
+				<h:graphicImage library="images" name="soup.png" />
+			</h:commandLink>
+		</h:form>
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(3)}">
+				<h:graphicImage library="images" name="salads.png" />
+			</h:commandLink>
+		</h:form>
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(4)}">
+				<h:graphicImage library="images" name="rolls.png" />
+			</h:commandLink>
+		</h:form>
+		<h:outputText value="Deserts" />
+		<h:outputText value="Beverages" />
+		<h:outputText value="Tea and Coffee" />
+		<h:outputText value="Wine" />
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(5)}">
+				<h:graphicImage library="images" name="desert.png" />
+			</h:commandLink>
+		</h:form>
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(6)}">
+				<h:graphicImage library="images" name="beverages.png" />
+			</h:commandLink>
+		</h:form>
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(7)}">
+				<h:graphicImage library="images" name="coffee.png" />
+			</h:commandLink>
+		</h:form>
+		<h:form>
+			<h:commandLink action="#{categoryMenuBean.chooseCategory(8)}">
+				<h:graphicImage library="images" name="wine.png" />
+			</h:commandLink>
+		</h:form>
+
+	</p:panelGrid>
+</h:body>
+</html>
